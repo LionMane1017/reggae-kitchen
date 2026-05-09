@@ -1,0 +1,23 @@
+# Cloudflare Pages Configuration for Wayne Passion Reggae Kitchen
+# This file configures the build and deployment settings for Cloudflare Pages
+
+name = "reggae-kitchen"
+type = "javascript"
+
+[build]
+command = "pnpm install && pnpm build"
+cwd = "./"
+watch_paths = ["client/**/*.tsx", "client/**/*.ts", "client/**/*.css"]
+
+[build.upload]
+format = "service-worker"
+
+[env.production]
+name = "reggae-kitchen-prod"
+routes = [
+  { pattern = "wayneshop-5hyisayn.manus.space", zone_name = "manus.space" }
+]
+
+# Build output directory
+# Vite outputs to dist/public for static files
+# This is the directory Cloudflare Pages will serve
