@@ -151,10 +151,10 @@ export default function Home() {
         <div className="container">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <h2 className="text-5xl md:text-6xl font-bold mb-6">
-              <span className="text-yellow-400">The McNeil</span> Family Legacy
+              <span className="text-yellow-400">The Reid</span> Family Legacy
             </h2>
             <p className="text-lg text-gray-300 leading-relaxed mb-6">
-              Wayne Passion Reggae Kitchen is more than a brand—it's a sacred family legacy. Born from generations of Caribbean culinary tradition, each jar carries the spirit of the islands, the heat of authentic jerk culture, and the pride of the McNeil family.
+              Wayne Passion Reggae Kitchen is more than a brand—it's a sacred family legacy. Born from generations of Caribbean culinary tradition, each jar carries the spirit of the islands, the heat of authentic jerk culture, and the pride of the Reid family.
             </p>
             <p className="text-lg text-gray-300 leading-relaxed">
               Every flavor tells a story. Every recipe honors tradition. Every bottle brings Caribbean fire to your table.
@@ -308,7 +308,7 @@ export default function Home() {
           <div className="rasta-stripe-thin mb-8"></div>
 
           <div className="text-center text-gray-500 text-sm">
-            <p>© 2026 Wayne Passion Reggae Kitchen. A sacred family legacy. 🌴🔥</p>
+            <p>© 2026 Wayne Passion Reggae Kitchen. A sacred Reid family legacy. 🌴🔥</p>
             <p className="mt-2">Crafted with Caribbean soul and authentic jerk tradition.</p>
           </div>
         </div>

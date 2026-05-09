@@ -18,7 +18,8 @@ function Router() {
   );
 }
 
-// Wayne Passion Reggae Kitchen - Dark theme with Rasta colors
+// Wayne Passion Reggae Kitchen - Reid Family Legacy
+// Dark theme with Rasta colors (red, gold, green)
 // Design: Reggae Soul Maximalism with black background, bold Rasta tri-color accents
 // Typography: Playfair Display (headings) + Poppins (body)
 // Color Palette: Red (#DC143C), Gold (#FFD700), Green (#228B22), Black (#1A1A1A)
