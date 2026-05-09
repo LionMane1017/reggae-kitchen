@@ -18,17 +18,16 @@ function Router() {
   );
 }
 
-// NOTE: About Theme
-// - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
-//   to keep consistent foreground/background color across components
-// - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
+// Wayne Passion Reggae Kitchen - Dark theme with Rasta colors
+// Design: Reggae Soul Maximalism with black background, bold Rasta tri-color accents
+// Typography: Playfair Display (headings) + Poppins (body)
+// Color Palette: Red (#DC143C), Gold (#FFD700), Green (#228B22), Black (#1A1A1A)
 
 function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider
-        defaultTheme="light"
-        // switchable
+        defaultTheme="dark"
       >
         <TooltipProvider>
           <Toaster />
