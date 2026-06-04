@@ -11,6 +11,7 @@ const App = () => {
   const [aiInput, setAiInput] = useState('');
   const [aiResult, setAiResult] = useState(null);
   const [isAiThinking, setIsAiThinking] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -22,7 +23,7 @@ const App = () => {
     if (window.lucide) {
       window.lucide.createIcons();
     }
-  }, [aiResult, isAiThinking, isCartOpen]);
+  }, [aiResult, isAiThinking, isCartOpen, cart, isMobileMenuOpen]);
 
   const addToCart = (item) => setCart(prev => [...prev, item]);
   const subtotal = cart.reduce((s, i) => s + i.price, 0).toFixed(2);
@@ -55,14 +56,22 @@ const App = () => {
       </div>
 
       {/* Navigation */}
-      <nav className={`fixed top-9.5 w-full z-50 transition-all ${scrolled ? 'bg-black/80 backdrop-blur-xl py-3 shadow-2xl' : 'py-6'}`}>
+      <nav className={`fixed top-9.5 w-full z-[500] transition-all ${scrolled ? 'bg-black/80 backdrop-blur-xl py-3 shadow-2xl' : 'py-6'}`}>
         <div className="max-w-7xl mx-auto px-8 flex justify-between items-center">
           <div className="flex items-center space-x-3 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <i data-lucide="flame" className="text-rasta-red h-8 w-8 fire-glow"></i>
             <h1 className="text-2xl font-black text-white uppercase tracking-tighter leading-none">Reggae <span className="text-gradient-gold">Kitchen</span></h1>
           </div>
+          
+          {/* Desktop Nav Links */}
+          <div className="hidden md:flex items-center space-x-8">
+            <button onClick={() => document.getElementById('flavors').scrollIntoView({ behavior: 'smooth' })} className="text-xs font-black uppercase tracking-widest text-zinc-400 hover:text-rasta-gold transition-colors cursor-pointer">Matrix</button>
+            <button onClick={() => document.getElementById('ai-chef').scrollIntoView({ behavior: 'smooth' })} className="text-xs font-black uppercase tracking-widest text-zinc-400 hover:text-rasta-gold transition-colors cursor-pointer">AI Chef</button>
+            <button onClick={() => document.getElementById('crew').scrollIntoView({ behavior: 'smooth' })} className="text-xs font-black uppercase tracking-widest text-zinc-400 hover:text-rasta-gold transition-colors cursor-pointer">Crew</button>
+          </div>
+
           <div className="flex items-center space-x-4">
-            <a href="https://raggaekitchen.online/" target="_blank" rel="noopener noreferrer" className="text-xs font-black uppercase tracking-widest text-zinc-400 hover:text-rasta-gold transition-all flex items-center space-x-2 bg-white/5 px-4 py-2.5 rounded-xl border border-white/10 hover:bg-white/10">
+            <a href="https://reggaekitchen.org" target="_blank" rel="noopener noreferrer" className="hidden md:flex text-xs font-black uppercase tracking-widest text-zinc-400 hover:text-rasta-gold transition-all items-center space-x-2 bg-white/5 px-4 py-2.5 rounded-xl border border-white/10 hover:bg-white/10">
               <i data-lucide="globe" className="h-3.5 w-3.5"></i>
               <span>Corporate Site</span>
             </a>
@@ -70,9 +79,44 @@ const App = () => {
               <i data-lucide="shopping-cart" className="h-5 w-5"></i>
               {cart.length > 0 && <span className="absolute -top-1 -right-1 bg-rasta-red text-[10px] font-black rounded-full h-5 w-5 flex items-center justify-center border-2 border-black">{cart.length}</span>}
             </button>
+            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-3 bg-white/5 rounded-full hover:bg-rasta-gold text-white hover:text-black transition-all border border-white/10 md:hidden flex items-center justify-center">
+              <span key={isMobileMenuOpen ? "close" : "open"} dangerouslySetInnerHTML={{ __html: `<i data-lucide="${isMobileMenuOpen ? 'x' : 'menu'}" class="h-5 w-5"></i>` }} className="h-5 w-5 flex items-center justify-center"></span>
+            </button>
           </div>
         </div>
       </nav>
+
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-[450] bg-black/95 backdrop-blur-3xl md:hidden flex flex-col justify-center items-center space-y-10 animate-slide-up-fade">
+          <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-rasta-green via-rasta-gold to-rasta-red"></div>
+          <button onClick={() => {
+            document.getElementById('flavors').scrollIntoView({ behavior: 'smooth' });
+            setIsMobileMenuOpen(false);
+          }} className="text-3xl font-black uppercase tracking-tighter text-white hover:text-rasta-gold transition-colors flex items-center space-x-4">
+            <i data-lucide="grid" className="h-8 w-8 text-rasta-green"></i>
+            <span>Flavor Matrix</span>
+          </button>
+          <button onClick={() => {
+            document.getElementById('ai-chef').scrollIntoView({ behavior: 'smooth' });
+            setIsMobileMenuOpen(false);
+          }} className="text-3xl font-black uppercase tracking-tighter text-white hover:text-rasta-gold transition-colors flex items-center space-x-4">
+            <i data-lucide="chef-hat" className="h-8 w-8 text-rasta-gold"></i>
+            <span>AI Pantry Chef</span>
+          </button>
+          <button onClick={() => {
+            document.getElementById('crew').scrollIntoView({ behavior: 'smooth' });
+            setIsMobileMenuOpen(false);
+          }} className="text-3xl font-black uppercase tracking-tighter text-white hover:text-rasta-gold transition-colors flex items-center space-x-4">
+            <i data-lucide="users" className="h-8 w-8 text-rasta-red"></i>
+            <span>Sovereign Crew</span>
+          </button>
+          <a href="https://reggaekitchen.org" target="_blank" rel="noopener noreferrer" onClick={() => setIsMobileMenuOpen(false)} className="text-3xl font-black uppercase tracking-tighter text-white hover:text-rasta-gold transition-colors flex items-center space-x-4">
+            <i data-lucide="globe" className="h-8 w-8 text-zinc-400"></i>
+            <span>Corporate Site</span>
+          </a>
+        </div>
+      )}
 
       {/* Hero Section */}
       <header className="hero-bg min-h-[95vh] flex items-center px-8 relative -mt-8 pt-8">
@@ -83,9 +127,9 @@ const App = () => {
           <h1 className="text-7xl md:text-9xl font-black text-white uppercase tracking-tighter leading-[0.85] mb-6">Authentic <span className="text-gradient-gold">Heat.</span></h1>
           <p className="text-xl md:text-2xl text-zinc-400 mb-10 border-l-4 border-rasta-green pl-6 font-medium max-w-2xl">Eye-tahl is vital. (Rhymes with a-towel). Experience the pure frequency of Wayne Reid's five-flavor legacy.</p>
           <div className="flex flex-wrap gap-4">
-            <MagneticButton onClick={() => document.getElementById('flavors').scrollIntoView({ behavior: 'smooth' })} className="bg-rasta-red text-white font-black px-12 py-6 rounded-2xl shadow-2xl hover:bg-red-700 uppercase tracking-widest text-sm">Shop Matrix</MagneticButton>
-            <MagneticButton onClick={() => document.getElementById('ai-chef').scrollIntoView({ behavior: 'smooth' })} className="bg-white/5 text-rasta-gold font-black px-12 py-6 rounded-2xl border border-rasta-gold/30 hover:bg-white/10 uppercase tracking-widest text-sm backdrop-blur-md">AI Pantry Chef</MagneticButton>
-            <a href="https://raggaekitchen.online/" target="_blank" rel="noopener noreferrer" className="bg-white/5 text-zinc-300 font-black px-12 py-6 rounded-2xl border border-white/10 hover:bg-white/10 uppercase tracking-widest text-sm backdrop-blur-md flex items-center space-x-2 transition-all">
+            <MagneticButton onClick={() => document.getElementById('flavors').scrollIntoView({ behavior: 'smooth' })} className="bg-rasta-red text-white font-black px-6 py-4 md:px-12 md:py-6 rounded-2xl shadow-2xl hover:bg-red-700 uppercase tracking-widest text-xs md:text-sm">Shop Matrix</MagneticButton>
+            <MagneticButton onClick={() => document.getElementById('ai-chef').scrollIntoView({ behavior: 'smooth' })} className="bg-white/5 text-rasta-gold font-black px-6 py-4 md:px-12 md:py-6 rounded-2xl border border-rasta-gold/30 hover:bg-white/10 uppercase tracking-widest text-xs md:text-sm backdrop-blur-md">AI Pantry Chef</MagneticButton>
+            <a href="https://reggaekitchen.org" target="_blank" rel="noopener noreferrer" className="bg-white/5 text-zinc-300 font-black px-6 py-4 md:px-12 md:py-6 rounded-2xl border border-white/10 hover:bg-white/10 uppercase tracking-widest text-xs md:text-sm backdrop-blur-md flex items-center space-x-2 transition-all">
               <i data-lucide="globe" className="h-4 w-4"></i>
               <span>Corporate Site</span>
             </a>
@@ -291,9 +335,9 @@ const App = () => {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-rasta-gold/20 to-transparent"></div>
         <h2 className="text-white font-black uppercase tracking-[0.4em] text-2xl mb-2 text-gradient-gold">Reggae Kitchen</h2>
         <div className="mb-4">
-          <a href="https://raggaekitchen.online/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-xs font-black uppercase tracking-widest text-zinc-500 hover:text-rasta-gold transition-colors">
+          <a href="https://reggaekitchen.org" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-xs font-black uppercase tracking-widest text-zinc-500 hover:text-rasta-gold transition-colors">
             <i data-lucide="globe" className="h-3.5 w-3.5"></i>
-            <span>Visit Corporate Site (.online)</span>
+            <span>Visit Corporate Site (.org)</span>
           </a>
         </div>
         <p className="text-zinc-600 font-mono text-[10px] tracking-widest uppercase mb-10">Brampton, ON &bull; MCNEIL LEGACY ARCHITECTURE &bull; SYS.AUTH.001</p>

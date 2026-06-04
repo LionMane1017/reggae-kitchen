@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
+import fs from 'fs';
 
 dotenv.config();
 
@@ -12,7 +13,16 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname)));
+
+// Serve static files: serve from dist/ if it exists, otherwise fall back to root folder
+const distPath = path.join(__dirname, 'dist');
+if (fs.existsSync(path.join(distPath, 'index.html'))) {
+    console.log('[Sovereign Server] Serving compiled assets from dist/ directory');
+    app.use(express.static(distPath));
+} else {
+    console.log('[Sovereign Server] Serving raw assets from root directory');
+    app.use(express.static(path.join(__dirname)));
+}
 
 app.post('/api/tts', async (req, res) => {
     try {
@@ -65,7 +75,12 @@ app.post('/api/tts', async (req, res) => {
 
 // Fallback to serve index.html for all other routes
 app.get('*all', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    const distIndex = path.join(__dirname, 'dist', 'index.html');
+    if (fs.existsSync(distIndex)) {
+        res.sendFile(distIndex);
+    } else {
+        res.sendFile(path.join(__dirname, 'index.html'));
+    }
 });
 
 app.listen(PORT, () => {
