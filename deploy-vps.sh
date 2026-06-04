@@ -17,7 +17,14 @@ ssh -o StrictHostKeyChecking=no -i "$SSH_KEY" $REMOTE_USER@$VPS_IP "mkdir -p /ho
 
 # 2. Upload assets to staging folder
 echo "📤 Uploading files to VPS staging area..."
-scp -i "$SSH_KEY" "$LOCAL_DIR/reggae_kitchen_corporate_lore.html" "$LOCAL_DIR/server.js" "$LOCAL_DIR/package.json" "$LOCAL_DIR/package-lock.json" "$LOCAL_DIR/.env" $REMOTE_USER@$VPS_IP:/home/ubuntu/reggae_kitchen_temp/
+scp -i "$SSH_KEY" \
+    "$LOCAL_DIR/reggae_kitchen_corporate_lore.html" \
+    "$LOCAL_DIR/index.legacy.html" \
+    "$LOCAL_DIR/server.js" \
+    "$LOCAL_DIR/package.json" \
+    "$LOCAL_DIR/package-lock.json" \
+    "$LOCAL_DIR/.env" \
+    $REMOTE_USER@$VPS_IP:/home/ubuntu/reggae_kitchen_temp/
 
 # 3. Perform remote installations and updates via sudo
 echo "⚙️  Executing secure server-side installation tasks..."
@@ -28,16 +35,32 @@ set -e
 SITE_USER="regga7504"
 SITE_GROUP="regga7504"
 SITE_DIR="/home/reggaekitchen.com"
-PUBLIC_HTML="$SITE_DIR/public_html"
 SERVER_DIR="$SITE_DIR/server"
+
+ORG_USER="regga1034"
+ORG_GROUP="regga1034"
+ORG_DIR="/home/reggaekitchen.org"
+ORG_PUBLIC_HTML="$ORG_DIR/public_html"
+
+CA_USER="regga9779"
+CA_GROUP="regga9779"
+CA_DIR="/home/reggaekitchen.ca"
+CA_PUBLIC_HTML="$CA_DIR/public_html"
 
 echo "🚀 Setting up directories..."
 sudo mkdir -p "$SERVER_DIR"
+sudo chown $SITE_USER:$SITE_GROUP "$SITE_DIR"
+sudo chown $SITE_USER:$SITE_GROUP "$SERVER_DIR"
 
-echo "📦 Transferring reggae_kitchen_corporate_lore.html to public_html..."
-sudo cp /home/ubuntu/reggae_kitchen_temp/reggae_kitchen_corporate_lore.html "$PUBLIC_HTML/index.html"
-sudo chown $SITE_USER:$SITE_GROUP "$PUBLIC_HTML/index.html"
-sudo chmod 644 "$PUBLIC_HTML/index.html"
+echo "📦 Transferring reggae_kitchen_corporate_lore.html to reggaekitchen.org public_html..."
+sudo cp /home/ubuntu/reggae_kitchen_temp/reggae_kitchen_corporate_lore.html "$ORG_PUBLIC_HTML/index.html"
+sudo chown $ORG_USER:$ORG_GROUP "$ORG_PUBLIC_HTML/index.html"
+sudo chmod 644 "$ORG_PUBLIC_HTML/index.html"
+
+echo "📦 Transferring index.legacy.html to reggaekitchen.ca public_html..."
+sudo cp /home/ubuntu/reggae_kitchen_temp/index.legacy.html "$CA_PUBLIC_HTML/index.html"
+sudo chown $CA_USER:$CA_GROUP "$CA_PUBLIC_HTML/index.html"
+sudo chmod 644 "$CA_PUBLIC_HTML/index.html"
 
 echo "📦 Transferring server files..."
 sudo cp /home/ubuntu/reggae_kitchen_temp/server.js "$SERVER_DIR/"
@@ -84,16 +107,16 @@ sudo systemctl enable reggae-kitchen-tts.service
 sudo systemctl restart reggae-kitchen-tts.service
 sudo systemctl status reggae-kitchen-tts.service --no-pager
 
-echo "🛡️ Updating OpenLiteSpeed configuration..."
-# Inject proxy context and extprocessor into vhost.conf before the rewrite rules
-VHOST_CONF="/usr/local/lsws/conf/vhosts/reggaekitchen.com/vhost.conf"
+echo "🛡️ Updating OpenLiteSpeed configurations..."
+for DOMAIN in reggaekitchen.ca reggaekitchen.org; do
+    VHOST_CONF="/usr/local/lsws/conf/vhosts/$DOMAIN/vhost.conf"
+    if [ -f "$VHOST_CONF" ]; then
+        # Remove existing context if it exists to make script re-runnable/idempotent
+        sudo sed -i '/extprocessor reggaeTtsBackend/,/}/d' "$VHOST_CONF"
+        sudo sed -i '/context \/api\/tts/,/}/d' "$VHOST_CONF"
 
-# Remove existing context if it exists to make script re-runnable/idempotent
-sudo sed -i '/extprocessor reggaeTtsBackend/,/}/d' "$VHOST_CONF"
-sudo sed -i '/context \/api\/tts/,/}/d' "$VHOST_CONF"
-
-# Construct OLS proxy snippet
-PROXY_SNIPPET=$(cat << 'SNIPPET'
+        # Construct OLS proxy snippet
+        PROXY_SNIPPET=$(cat << 'SNIPPET'
 extprocessor reggaeTtsBackend {
   type                    proxy
   address                 http://127.0.0.1:3005
@@ -111,9 +134,10 @@ context /api/tts {
 }
 SNIPPET
 )
-
-# Insert proxy rules before the rewrite rules
-sudo perl -i -pe 'print "'"$PROXY_SNIPPET"'\n\n" if /^rewrite\s*\{/ && ! $inserted++' "$VHOST_CONF"
+        # Insert proxy rules before the rewrite rules
+        sudo perl -i -pe 'print "'"$PROXY_SNIPPET"'\n\n" if /^rewrite\s*\{/ && ! $inserted++' "$VHOST_CONF"
+    fi
+done
 
 echo "🌀 Restarting OpenLiteSpeed to apply changes..."
 sudo /usr/local/lsws/bin/lswsctrl restart
