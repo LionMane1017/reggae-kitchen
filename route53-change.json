@@ -1,0 +1,31 @@
+{
+  "Comment": "Update A records for raggaekitchen.online with TTL 1",
+  "Changes": [
+    {
+      "Action": "UPSERT",
+      "ResourceRecordSet": {
+        "Name": "raggaekitchen.online.",
+        "Type": "A",
+        "TTL": 1,
+        "ResourceRecords": [
+          {
+            "Value": "3.98.151.231"
+          }
+        ]
+      }
+    },
+    {
+      "Action": "UPSERT",
+      "ResourceRecordSet": {
+        "Name": "www.raggaekitchen.online.",
+        "Type": "A",
+        "TTL": 1,
+        "ResourceRecords": [
+          {
+            "Value": "3.98.151.231"
+          }
+        ]
+      }
+    }
+  ]
+}
