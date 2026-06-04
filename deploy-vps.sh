@@ -47,6 +47,11 @@ CA_GROUP="regga9779"
 CA_DIR="/home/reggaekitchen.ca"
 CA_PUBLIC_HTML="$CA_DIR/public_html"
 
+ONLINE_USER="regga5964"
+ONLINE_GROUP="regga5964"
+ONLINE_DIR="/home/reggaekitchen.online"
+ONLINE_PUBLIC_HTML="$ONLINE_DIR/public_html"
+
 echo "🚀 Setting up directories..."
 sudo mkdir -p "$SERVER_DIR"
 sudo chown $SITE_USER:$SITE_GROUP "$SITE_DIR"
@@ -61,6 +66,11 @@ echo "📦 Transferring index.legacy.html to reggaekitchen.ca public_html..."
 sudo cp /home/ubuntu/reggae_kitchen_temp/index.legacy.html "$CA_PUBLIC_HTML/index.html"
 sudo chown $CA_USER:$CA_GROUP "$CA_PUBLIC_HTML/index.html"
 sudo chmod 644 "$CA_PUBLIC_HTML/index.html"
+
+echo "📦 Transferring index.legacy.html to reggaekitchen.online public_html..."
+sudo cp /home/ubuntu/reggae_kitchen_temp/index.legacy.html "$ONLINE_PUBLIC_HTML/index.html"
+sudo chown $ONLINE_USER:$ONLINE_GROUP "$ONLINE_PUBLIC_HTML/index.html"
+sudo chmod 644 "$ONLINE_PUBLIC_HTML/index.html"
 
 echo "📦 Transferring server files..."
 sudo cp /home/ubuntu/reggae_kitchen_temp/server.js "$SERVER_DIR/"
@@ -108,7 +118,7 @@ sudo systemctl restart reggae-kitchen-tts.service
 sudo systemctl status reggae-kitchen-tts.service --no-pager
 
 echo "🛡️ Updating OpenLiteSpeed configurations..."
-for DOMAIN in reggaekitchen.ca reggaekitchen.org; do
+for DOMAIN in reggaekitchen.ca reggaekitchen.org reggaekitchen.online; do
     VHOST_CONF="/usr/local/lsws/conf/vhosts/$DOMAIN/vhost.conf"
     if [ -f "$VHOST_CONF" ]; then
         # Remove existing context if it exists to make script re-runnable/idempotent
@@ -138,6 +148,11 @@ SNIPPET
         sudo perl -i -pe 'print "'"$PROXY_SNIPPET"'\n\n" if /^rewrite\s*\{/ && ! $inserted++' "$VHOST_CONF"
     fi
 done
+
+echo "🧹 Purging OpenLiteSpeed cache for domains..."
+sudo rm -rf /usr/local/lsws/cachedata/reggaekitchen.ca/*
+sudo rm -rf /usr/local/lsws/cachedata/reggaekitchen.org/*
+sudo rm -rf /usr/local/lsws/cachedata/reggaekitchen.online/*
 
 echo "🌀 Restarting OpenLiteSpeed to apply changes..."
 sudo /usr/local/lsws/bin/lswsctrl restart
