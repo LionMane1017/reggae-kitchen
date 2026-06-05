@@ -124,7 +124,7 @@ const App = () => {
           <div className="absolute top-0 left-0 w-full h-1 bg-rasta-gold/20">
             <div className="h-full bg-rasta-gold w-1/3 animate-shimmer"></div>
           </div>
-          <h1 className="text-7xl md:text-9xl font-black text-white uppercase tracking-tighter leading-[0.85] mb-6">Authentic <span className="text-gradient-gold">Heat.</span></h1>
+          <h1 className="text-5xl sm:text-7xl md:text-9xl font-black text-white uppercase tracking-tighter leading-[0.85] mb-6">Authentic <span className="text-gradient-gold">Heat.</span></h1>
           <p className="text-xl md:text-2xl text-zinc-400 mb-10 border-l-4 border-rasta-green pl-6 font-medium max-w-2xl">Eye-tahl is vital. (Rhymes with a-towel). Experience the pure frequency of Wayne Reid's five-flavor legacy.</p>
           <div className="flex flex-wrap gap-4">
             <MagneticButton onClick={() => document.getElementById('flavors').scrollIntoView({ behavior: 'smooth' })} className="bg-rasta-red text-white font-black px-6 py-4 md:px-12 md:py-6 rounded-2xl shadow-2xl hover:bg-red-700 uppercase tracking-widest text-xs md:text-sm">Shop Matrix</MagneticButton>
