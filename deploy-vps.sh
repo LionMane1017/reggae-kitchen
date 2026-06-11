@@ -26,6 +26,11 @@ scp -i "$SSH_KEY" \
     "$LOCAL_DIR/.env" \
     $REMOTE_USER@$VPS_IP:/home/ubuntu/reggae_kitchen_temp/
 
+echo "📤 Uploading Product Images folder recursively..."
+scp -r -i "$SSH_KEY" \
+    "$LOCAL_DIR/Product Images" \
+    $REMOTE_USER@$VPS_IP:/home/ubuntu/reggae_kitchen_temp/
+
 # 3. Perform remote installations and updates via sudo
 echo "⚙️  Executing secure server-side installation tasks..."
 ssh -i "$SSH_KEY" $REMOTE_USER@$VPS_IP << 'EOF'
@@ -71,6 +76,24 @@ echo "📦 Transferring index.legacy.html to reggaekitchen.online public_html...
 sudo cp /home/ubuntu/reggae_kitchen_temp/index.legacy.html "$ONLINE_PUBLIC_HTML/index.html"
 sudo chown $ONLINE_USER:$ONLINE_GROUP "$ONLINE_PUBLIC_HTML/index.html"
 sudo chmod 644 "$ONLINE_PUBLIC_HTML/index.html"
+
+echo "📦 Transferring Product Images to all sites..."
+sudo rm -rf "$ORG_PUBLIC_HTML/Product Images"
+sudo rm -rf "$CA_PUBLIC_HTML/Product Images"
+sudo rm -rf "$ONLINE_PUBLIC_HTML/Product Images"
+
+sudo cp -r "/home/ubuntu/reggae_kitchen_temp/Product Images" "$ORG_PUBLIC_HTML/"
+sudo cp -r "/home/ubuntu/reggae_kitchen_temp/Product Images" "$CA_PUBLIC_HTML/"
+sudo cp -r "/home/ubuntu/reggae_kitchen_temp/Product Images" "$ONLINE_PUBLIC_HTML/"
+
+sudo chown -R $ORG_USER:$ORG_GROUP "$ORG_PUBLIC_HTML/Product Images"
+sudo chmod -R 755 "$ORG_PUBLIC_HTML/Product Images"
+
+sudo chown -R $CA_USER:$CA_GROUP "$CA_PUBLIC_HTML/Product Images"
+sudo chmod -R 755 "$CA_PUBLIC_HTML/Product Images"
+
+sudo chown -R $ONLINE_USER:$ONLINE_GROUP "$ONLINE_PUBLIC_HTML/Product Images"
+sudo chmod -R 755 "$ONLINE_PUBLIC_HTML/Product Images"
 
 echo "📦 Transferring server files..."
 sudo cp /home/ubuntu/reggae_kitchen_temp/server.js "$SERVER_DIR/"

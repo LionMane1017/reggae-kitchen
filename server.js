@@ -14,15 +14,14 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-// Serve static files: serve from dist/ if it exists, otherwise fall back to root folder
+// Serve static files: check dist/ first for compiled storefront, then fall back to root
 const distPath = path.join(__dirname, 'dist');
 if (fs.existsSync(path.join(distPath, 'index.html'))) {
     console.log('[Sovereign Server] Serving compiled assets from dist/ directory');
     app.use(express.static(distPath));
-} else {
-    console.log('[Sovereign Server] Serving raw assets from root directory');
-    app.use(express.static(path.join(__dirname)));
 }
+console.log('[Sovereign Server] Serving raw assets from root directory');
+app.use(express.static(path.join(__dirname)));
 
 app.post('/api/tts', async (req, res) => {
     try {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import KalebAgent from './components/KalebAgent';
 import MagneticButton from './components/MagneticButton';
 import RevealOnScroll from './components/RevealOnScroll';
+import ProductImage from './components/ProductImage';
 import { FLAVORS, AI_RECIPE_DB, CREW, MILESTONES } from './data/models';
 
 const App = () => {
@@ -125,7 +126,7 @@ const App = () => {
             <div className="h-full bg-rasta-gold w-1/3 animate-shimmer"></div>
           </div>
           <h1 className="text-5xl sm:text-7xl md:text-9xl font-black text-white uppercase tracking-tighter leading-[0.85] mb-6">Authentic <span className="text-gradient-gold">Heat.</span></h1>
-          <p className="text-xl md:text-2xl text-zinc-400 mb-10 border-l-4 border-rasta-green pl-6 font-medium max-w-2xl">Eye-tahl is vital. (Rhymes with a-towel). Experience the pure frequency of Wayne Reid's five-flavor legacy.</p>
+          <p className="text-xl md:text-2xl text-zinc-400 mb-10 border-l-4 border-rasta-green pl-6 font-medium max-w-2xl">Eye-tahl is vital. (Rhymes with a-towel). Experience the pure frequency of Wayne Reid's six-flavor legacy.</p>
           <div className="flex flex-wrap gap-4">
             <MagneticButton onClick={() => document.getElementById('flavors').scrollIntoView({ behavior: 'smooth' })} className="bg-rasta-red text-white font-black px-6 py-4 md:px-12 md:py-6 rounded-2xl shadow-2xl hover:bg-red-700 uppercase tracking-widest text-xs md:text-sm">Shop Matrix</MagneticButton>
             <MagneticButton onClick={() => document.getElementById('ai-chef').scrollIntoView({ behavior: 'smooth' })} className="bg-white/5 text-rasta-gold font-black px-6 py-4 md:px-12 md:py-6 rounded-2xl border border-rasta-gold/30 hover:bg-white/10 uppercase tracking-widest text-xs md:text-sm backdrop-blur-md">AI Pantry Chef</MagneticButton>
@@ -194,12 +195,25 @@ const App = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {FLAVORS.map((f, i) => (
             <RevealOnScroll key={f.id} delay={i * 100}>
-              <div className="glass-card p-10 rounded-[3rem] flex flex-col h-full group hover:border-rasta-gold/50 transition-all duration-500 relative overflow-hidden shadow-2xl">
+              <div className="glass-card p-10 rounded-[3rem] flex flex-col h-full group hover:border-rasta-gold/50 transition-all duration-500 relative overflow-hidden shadow-2xl bg-black/40">
                 <div className="absolute top-0 left-0 w-full h-1 bg-white/5 group-hover:bg-rasta-gold/20 transition-colors"></div>
-                <div className={`h-2.5 w-20 ${f.color} rounded-full mb-8 shadow-inner`}></div>
-                <h3 className="text-4xl font-black text-white uppercase mb-4 tracking-tighter leading-none transition-colors group-hover:text-rasta-gold">{f.name}</h3>
-                <p className="text-zinc-400 mb-10 font-medium leading-relaxed text-lg">{f.desc}</p>
-                <div className="mt-auto flex justify-between items-center pt-8 border-t border-white/5">
+                <ProductImage src={f.image} alt={f.name} colorClass={f.color} />
+                <div className="flex justify-between items-center mb-6">
+                  <div className={`h-2.5 w-16 ${f.color} rounded-full shadow-inner`}></div>
+                  <div className="flex space-x-1">
+                    {[...Array(5)].map((_, idx) => (
+                      <i key={idx} data-lucide="flame" className={`h-4 w-4 ${idx < f.heat ? 'text-rasta-red fill-rasta-red' : 'text-zinc-700'}`}></i>
+                    ))}
+                  </div>
+                </div>
+                <h3 className="text-3xl font-black text-white uppercase mb-4 tracking-tighter leading-none transition-colors group-hover:text-rasta-gold min-h-[72px] flex items-center">{f.name}</h3>
+                <p className="text-zinc-400 mb-8 font-medium leading-relaxed text-sm flex-grow">{f.desc}</p>
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {f.pairs.map((p, idx) => (
+                    <span key={idx} className="bg-white/5 border border-white/10 text-zinc-500 font-mono text-[9px] uppercase tracking-widest px-3 py-1.5 rounded-full">{p}</span>
+                  ))}
+                </div>
+                <div className="mt-auto flex justify-between items-center pt-6 border-t border-white/5">
                   <div>
                     <span className="block text-zinc-500 text-[10px] font-black uppercase tracking-widest mb-1">Vault Price</span>
                     <span className="text-3xl font-black text-white tracking-tighter">${f.price}</span>

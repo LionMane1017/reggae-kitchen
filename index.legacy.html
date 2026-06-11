@@ -179,19 +179,117 @@
 
         // --- DATA MODELS ---
         const FLAVORS = [
-            { id: 'orig', name: 'The Original', heat: 3, price: 12.99, color: 'bg-orange-700', pairs: ['Chicken', 'Pork', 'Beef'], desc: "Wayne Reid's master foundation. Thyme, allspice, and fire." },
-            { id: 'mango', name: 'Mango Island', heat: 2, price: 14.95, color: 'bg-rasta-gold', pairs: ['Fish', 'Shrimp', 'Tofu'], desc: "Sweet tropical heat fusion. Fresh mango meets island spice." },
-            { id: 'tamarind', name: 'Tamarind Tang', heat: 3, price: 14.95, color: 'bg-amber-900', pairs: ['Ribs', 'Lamb', 'Duck'], desc: "Tart and deep profile. Ideal for grilled pork and fresh fish." },
-            { id: 'masala', name: 'Brampton Masala', heat: 4, price: 15.99, color: 'bg-orange-600', pairs: ['Curry', 'Goat', 'Potatoes'], desc: "The legend of the city. Caribbean fire meets South Asian warmth." },
-            { id: 'inferno', name: 'The Inferno', heat: 5, price: 13.99, color: 'bg-rasta-red', pairs: ['Everything', 'Wings'], desc: "Pure Scotch Bonnet intensity for the serious heat-seekers." },
+            {
+                id: 'original',
+                name: 'Original Jerk Seasoning Sauce',
+                heat: 3,
+                price: 12.99,
+                color: 'bg-[#8A9A5B]',
+                pairs: ['Chicken', 'Pork', 'Beef'],
+                desc: "The master foundation of Wayne Reid's legacy. Fresh green scallions, garlic, ginger, and lime blended with pimento wood smoke.",
+                image: 'Product Images/drive-download-20260611T162601Z-3-001/Screenshot_20260606_082957_Gmail.jpg'
+            },
+            {
+                id: 'curry',
+                name: 'Curry Jerk Sauce with Turmeric',
+                heat: 3,
+                price: 12.99,
+                color: 'bg-[#9E9735]',
+                pairs: ['Goat', 'Chicken', 'Chickpeas'],
+                desc: "A rich, vibrant fusion of traditional Jamaican jerk heat and South Asian warmth. Powered by golden turmeric, cumin, and fenugreek.",
+                image: 'Product Images/drive-download-20260611T162601Z-3-001/Screenshot_20260606_083451_Gmail.jpg'
+            },
+            {
+                id: 'mango',
+                name: 'Mango Jerk Seasoning Sauce',
+                heat: 2,
+                price: 12.99,
+                color: 'bg-[#D46A12]',
+                pairs: ['Fish', 'Shrimp', 'Tofu'],
+                desc: "Sweet tropical heat fusion. Fresh mango meets authentic island spices for a perfectly balanced glaze.",
+                image: 'Product Images/drive-download-20260611T162601Z-3-001/Screenshot_20260606_082906_Gmail.jpg'
+            },
+            {
+                id: 'hot',
+                name: 'Hot Jerk Seasoning Sauce (XX Spicy)',
+                heat: 5,
+                price: 12.99,
+                color: 'bg-[#CE1126]',
+                pairs: ['Wings', 'Pork', 'Ribs'],
+                desc: "Pure Scotch Bonnet intensity for the serious heat-seekers. Deep fire tempered with thyme and allspice.",
+                image: 'Product Images/drive-download-20260611T162601Z-3-001/Screenshot_20260606_082635_Gmail.jpg'
+            },
+            {
+                id: 'tamarind',
+                name: 'Tamarind Jerk Seasoning Sauce',
+                heat: 3,
+                price: 12.99,
+                color: 'bg-[#5C3A21]',
+                pairs: ['Ribs', 'Lamb', 'Duck'],
+                desc: "Tart, sweet, and deeply savory. A complex fusion of tamarind tang and signature Jamaican allspice.",
+                image: 'Product Images/drive-download-20260611T162601Z-3-001/Screenshot_20260606_082730_Gmail.jpg'
+            },
+            {
+                id: 'pepper-free',
+                name: 'Pepper-Free Original Jerk Seasoning Sauce',
+                heat: 0,
+                price: 12.99,
+                color: 'bg-[#E6B800]',
+                pairs: ['Chicken', 'Pork', 'Vegetables'],
+                desc: "All the rich, aromatic wood-smoke flavor of our original recipe, completely free of pepper heat.",
+                image: 'Product Images/drive-download-20260611T162601Z-3-001/Screenshot_20260606_082813_Gmail.jpg'
+            }
         ];
 
         const AI_RECIPE_DB = [
-            { id: 1, triggerWords: ['chicken', 'rice', 'peas'], title: "Classic Kingston Chicken Bowl", requiredFlavor: 'orig', time: "35m", desc: "A hearty, staple bowl. Rub the chicken in The Original, pan sear, and serve over rice and peas." },
-            { id: 2, triggerWords: ['fish', 'shrimp', 'seafood', 'mango'], title: "Mango Island Seafood Skewers", requiredFlavor: 'mango', time: "20m", desc: "Glaze your seafood with Mango Island before hitting the grill. The sugars caramelize instantly." },
-            { id: 3, triggerWords: ['pork', 'ribs', 'potato'], title: "Tamarind Tang Glazed Ribs", requiredFlavor: 'tamarind', time: "2h", desc: "Slow roast the pork, basting every 30 mins with Tamarind Tang for a sticky, sweet-sour bark." },
-            { id: 4, triggerWords: ['tofu', 'curry', 'vegetable', 'vegan'], title: "Brampton Masala Eye-tahl Stew", requiredFlavor: 'masala', time: "45m", desc: "A rich, vegan-friendly coconut milk stew powered by the deep heat of Brampton Masala." },
-            { id: 5, triggerWords: ['wings', 'spicy', 'hot'], title: "Inferno Midnight Wings", requiredFlavor: 'inferno', time: "40m", desc: "Warning: Pure heat. Toss double-fried wings in The Inferno. Serve with cooling sour cream." },
+            {
+                id: 1,
+                triggerWords: ['chicken', 'rice', 'peas'],
+                title: "Classic Kingston Chicken Bowl",
+                requiredFlavor: 'original',
+                time: "35m",
+                desc: "A hearty, staple bowl. Rub the chicken in Original Jerk Seasoning Sauce, pan sear, and serve over rice and peas."
+            },
+            {
+                id: 2,
+                triggerWords: ['fish', 'shrimp', 'seafood', 'mango'],
+                title: "Mango Island Seafood Skewers",
+                requiredFlavor: 'mango',
+                time: "20m",
+                desc: "Glaze your seafood with Mango Jerk Seasoning Sauce before hitting the grill. The sugars caramelize instantly."
+            },
+            {
+                id: 3,
+                triggerWords: ['pork', 'ribs', 'potato'],
+                title: "Tamarind Tang Glazed Ribs",
+                requiredFlavor: 'tamarind',
+                time: "2h",
+                desc: "Slow roast the pork, basting every 30 mins with Tamarind Jerk Seasoning Sauce for a sticky, sweet-sour bark."
+            },
+            {
+                id: 4,
+                triggerWords: ['tofu', 'curry', 'vegetable', 'vegan'],
+                title: "Curry Jerk Turmeric Stew",
+                requiredFlavor: 'curry',
+                time: "45m",
+                desc: "A rich, vegan-friendly coconut milk stew powered by the warm heat of Curry Jerk Sauce with Turmeric."
+            },
+            {
+                id: 5,
+                triggerWords: ['wings', 'spicy', 'hot'],
+                title: "Inferno Midnight Wings",
+                requiredFlavor: 'hot',
+                time: "40m",
+                desc: "Warning: Pure heat. Toss double-fried wings in Hot Jerk Seasoning Sauce (XX Spicy). Serve with cooling sour cream."
+            },
+            {
+                id: 6,
+                triggerWords: ['mild', 'kid', 'child', 'pepper-free', 'vegetables'],
+                title: "Wayne's Garden Pepper-Free Stir-fry",
+                requiredFlavor: 'pepper-free',
+                time: "15m",
+                desc: "A mild, aromatic stir-fry featuring sweet peppers, broccoli, and snap peas, tossed in our Pepper-Free Original Jerk Sauce."
+            }
         ];
 
         const CREW = [
@@ -200,6 +298,33 @@
             { name: "Chris Hale", role: "Director of Sales", email: "Chale@reggaekitchen.com", phone: "226-339-8482", badgeColor: "bg-rasta-red text-white", initial: "C" },
             { name: "Machel Lindsay", role: "Ambassador of Music & Entertainment", email: "6stargeneral.reggaekitchen@gmail.com", phone: "647-479-4839", badgeColor: "bg-white/10 text-rasta-gold", initial: "M" }
         ];
+
+        // --- COMPONENTS ---
+        const ProductImage = ({ src, alt, colorClass }) => {
+            const [hasError, setHasError] = useState(false);
+
+            if (hasError || !src) {
+                return (
+                    <div className={`w-full aspect-[4/3] ${colorClass} rounded-2xl flex flex-col items-center justify-center text-white/40 border border-white/10 shadow-inner mb-6 relative overflow-hidden`}>
+                        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+                        <span className="relative text-2xl mb-1">🔥</span>
+                        <span className="relative text-[10px] font-black uppercase tracking-widest opacity-60">Eye-tahl Standard</span>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 shadow-lg mb-6 relative group/img transition-all bg-black/40">
+                    <img
+                        src={src}
+                        alt={alt}
+                        loading="lazy"
+                        onError={() => setHasError(true)}
+                        className="w-full h-full object-cover object-center group-hover/img:scale-105 transition-transform duration-750"
+                    />
+                </div>
+            );
+        };
 
         // --- COMPONENTS ---
         const MagneticButton = ({ children, onClick, className }) => {
@@ -429,7 +554,7 @@
                         <div className="max-w-4xl mx-auto glass-card p-12 rounded-[4rem] animate-slide-up-fade relative overflow-hidden backdrop-blur-3xl border border-white/10 shadow-2xl">
                             <div className="absolute top-0 left-0 w-full h-1 bg-rasta-gold/20"><div className="h-full bg-rasta-gold w-1/3 animate-shimmer"></div></div>
                             <h1 className="text-5xl sm:text-7xl md:text-9xl font-black text-white uppercase tracking-tighter leading-[0.85] mb-6">Authentic <span className="text-gradient-gold">Heat.</span></h1>
-                            <p className="text-xl md:text-2xl text-zinc-400 mb-10 border-l-4 border-rasta-green pl-6 font-medium max-w-2xl">Eye-tahl is vital. (Rhymes with a-towel). Experience the pure frequency of Wayne Reid's five-flavor legacy.</p>
+                            <p className="text-xl md:text-2xl text-zinc-400 mb-10 border-l-4 border-rasta-green pl-6 font-medium max-w-2xl">Eye-tahl is vital. (Rhymes with a-towel). Experience the pure frequency of Wayne Reid's six-flavor legacy.</p>
                             <div className="flex flex-wrap gap-4">
                                 <MagneticButton onClick={() => document.getElementById('flavors').scrollIntoView({ behavior: 'smooth' })} className="bg-rasta-red text-white font-black px-6 py-4 md:px-12 md:py-6 rounded-2xl shadow-2xl hover:bg-red-700 uppercase tracking-widest text-xs md:text-sm">Shop Matrix</MagneticButton>
                                 <MagneticButton onClick={() => document.getElementById('ai-chef').scrollIntoView({ behavior: 'smooth' })} className="bg-white/5 text-rasta-gold font-black px-6 py-4 md:px-12 md:py-6 rounded-2xl border border-rasta-gold/30 hover:bg-white/10 uppercase tracking-widest text-xs md:text-sm backdrop-blur-md">AI Pantry Chef</MagneticButton>
@@ -496,17 +621,32 @@
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                             {FLAVORS.map((f, i) => (
                                 <RevealOnScroll key={f.id} delay={i * 100}>
-                                    <div className="glass-card p-10 rounded-[3rem] flex flex-col h-full group hover:border-rasta-gold/50 transition-all duration-500 relative overflow-hidden shadow-2xl">
+                                    <div className="glass-card p-10 rounded-[3rem] flex flex-col h-full group hover:border-rasta-gold/50 transition-all duration-500 relative overflow-hidden shadow-2xl bg-black/40">
                                         <div className="absolute top-0 left-0 w-full h-1 bg-white/5 group-hover:bg-rasta-gold/20 transition-colors"></div>
-                                        <div className={`h-2.5 w-20 ${f.color} rounded-full mb-8 shadow-inner`}></div>
-                                        <h3 className="text-4xl font-black text-white uppercase mb-4 tracking-tighter leading-none transition-colors group-hover:text-rasta-gold">{f.name}</h3>
-                                        <p className="text-zinc-400 mb-10 font-medium leading-relaxed text-lg">{f.desc}</p>
-                                        <div className="mt-auto flex justify-between items-center pt-8 border-t border-white/5">
+                                        <ProductImage src={f.image} alt={f.name} colorClass={f.color} />
+                                        <div className="flex justify-between items-center mb-6">
+                                            <div className={`h-2.5 w-16 ${f.color} rounded-full shadow-inner`}></div>
+                                            <div className="flex space-x-1">
+                                                {[...Array(5)].map((_, idx) => (
+                                                    <i key={idx} data-lucide="flame" className={`h-4 w-4 ${idx < f.heat ? 'text-rasta-red fill-rasta-red' : 'text-zinc-700'}`}></i>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <h3 className="text-3xl font-black text-white uppercase mb-4 tracking-tighter leading-none transition-colors group-hover:text-rasta-gold min-h-[72px] flex items-center">{f.name}</h3>
+                                        <p className="text-zinc-400 mb-8 font-medium leading-relaxed text-sm flex-grow">{f.desc}</p>
+                                        <div className="flex flex-wrap gap-2 mb-8">
+                                            {f.pairs.map((p, idx) => (
+                                                <span key={idx} className="bg-white/5 border border-white/10 text-zinc-500 font-mono text-[9px] uppercase tracking-widest px-3 py-1.5 rounded-full">{p}</span>
+                                            ))}
+                                        </div>
+                                        <div className="mt-auto flex justify-between items-center pt-6 border-t border-white/5">
                                             <div>
                                                 <span className="block text-zinc-500 text-[10px] font-black uppercase tracking-widest mb-1">Vault Price</span>
                                                 <span className="text-3xl font-black text-white tracking-tighter">${f.price}</span>
                                             </div>
-                                            <button onClick={() => addToCart(f)} className="bg-white/5 hover:bg-rasta-green p-5 rounded-2xl transition-all shadow-xl border border-white/10 group-hover:border-rasta-green/50"><i data-lucide="shopping-cart" className="h-6 w-6 text-white"></i></button>
+                                            <button onClick={() => addToCart(f)} className="bg-white/5 hover:bg-rasta-green p-5 rounded-2xl transition-all shadow-xl border border-white/10 group-hover:border-rasta-green/50">
+                                                <i data-lucide="shopping-cart" className="h-6 w-6 text-white"></i>
+                                            </button>
                                         </div>
                                     </div>
                                 </RevealOnScroll>
