@@ -18,8 +18,11 @@ ssh -o StrictHostKeyChecking=no -i "$SSH_KEY" $REMOTE_USER@$VPS_IP "mkdir -p /ho
 # 2. Upload assets to staging folder
 echo "📤 Uploading files to VPS staging area..."
 scp -i "$SSH_KEY" \
+    "$LOCAL_DIR/index.html" \
+    "$LOCAL_DIR/lore.html" \
+    "$LOCAL_DIR/cards.html" \
     "$LOCAL_DIR/reggae_kitchen_corporate_lore.html" \
-    "$LOCAL_DIR/index.legacy.html" \
+    "$LOCAL_DIR/Business Card Maker/reggae_kitchen_business_card_engine.html" \
     "$LOCAL_DIR/server.js" \
     "$LOCAL_DIR/package.json" \
     "$LOCAL_DIR/package-lock.json" \
@@ -67,15 +70,27 @@ sudo cp /home/ubuntu/reggae_kitchen_temp/reggae_kitchen_corporate_lore.html "$OR
 sudo chown $ORG_USER:$ORG_GROUP "$ORG_PUBLIC_HTML/index.html"
 sudo chmod 644 "$ORG_PUBLIC_HTML/index.html"
 
-echo "📦 Transferring index.legacy.html to reggaekitchen.ca public_html..."
-sudo cp /home/ubuntu/reggae_kitchen_temp/index.legacy.html "$CA_PUBLIC_HTML/index.html"
-sudo chown $CA_USER:$CA_GROUP "$CA_PUBLIC_HTML/index.html"
-sudo chmod 644 "$CA_PUBLIC_HTML/index.html"
+echo "📦 Transferring index.html, lore.html, cards.html to reggaekitchen.ca public_html..."
+sudo cp /home/ubuntu/reggae_kitchen_temp/index.html "$CA_PUBLIC_HTML/index.html"
+sudo cp /home/ubuntu/reggae_kitchen_temp/lore.html "$CA_PUBLIC_HTML/lore.html"
+sudo cp /home/ubuntu/reggae_kitchen_temp/cards.html "$CA_PUBLIC_HTML/cards.html"
+sudo chown $CA_USER:$CA_GROUP "$CA_PUBLIC_HTML/index.html" "$CA_PUBLIC_HTML/lore.html" "$CA_PUBLIC_HTML/cards.html"
+sudo chmod 644 "$CA_PUBLIC_HTML/index.html" "$CA_PUBLIC_HTML/lore.html" "$CA_PUBLIC_HTML/cards.html"
 
-echo "📦 Transferring index.legacy.html to reggaekitchen.online public_html..."
-sudo cp /home/ubuntu/reggae_kitchen_temp/index.legacy.html "$ONLINE_PUBLIC_HTML/index.html"
-sudo chown $ONLINE_USER:$ONLINE_GROUP "$ONLINE_PUBLIC_HTML/index.html"
-sudo chmod 644 "$ONLINE_PUBLIC_HTML/index.html"
+echo "📦 Transferring index.html, lore.html, cards.html to reggaekitchen.online public_html..."
+sudo cp /home/ubuntu/reggae_kitchen_temp/index.html "$ONLINE_PUBLIC_HTML/index.html"
+sudo cp /home/ubuntu/reggae_kitchen_temp/lore.html "$ONLINE_PUBLIC_HTML/lore.html"
+sudo cp /home/ubuntu/reggae_kitchen_temp/cards.html "$ONLINE_PUBLIC_HTML/cards.html"
+sudo chown $ONLINE_USER:$ONLINE_GROUP "$ONLINE_PUBLIC_HTML/index.html" "$ONLINE_PUBLIC_HTML/lore.html" "$ONLINE_PUBLIC_HTML/cards.html"
+sudo chmod 644 "$ONLINE_PUBLIC_HTML/index.html" "$ONLINE_PUBLIC_HTML/lore.html" "$ONLINE_PUBLIC_HTML/cards.html"
+
+echo "📦 Transferring business card engine to cards.reggaekitchen.ca..."
+sudo mkdir -p "$CA_PUBLIC_HTML/cards.reggaekitchen.ca"
+sudo cp /home/ubuntu/reggae_kitchen_temp/reggae_kitchen_business_card_engine.html "$CA_PUBLIC_HTML/cards.reggaekitchen.ca/index.html"
+sudo cp /home/ubuntu/reggae_kitchen_temp/reggae_kitchen_business_card_engine.html "$CA_PUBLIC_HTML/cards.reggaekitchen.ca/reggae_kitchen_business_card_engine.html"
+sudo chown -R $CA_USER:$CA_GROUP "$CA_PUBLIC_HTML/cards.reggaekitchen.ca"
+sudo chmod 755 "$CA_PUBLIC_HTML/cards.reggaekitchen.ca"
+sudo chmod 644 "$CA_PUBLIC_HTML/cards.reggaekitchen.ca/index.html" "$CA_PUBLIC_HTML/cards.reggaekitchen.ca/reggae_kitchen_business_card_engine.html"
 
 echo "📦 Transferring Product Images to all sites..."
 sudo rm -rf "$ORG_PUBLIC_HTML/Product Images"

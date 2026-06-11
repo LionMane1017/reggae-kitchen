@@ -1,0 +1,34 @@
+<USER_REQUEST>
+add to index.html all 6Product Images
+
+######
+
+👑 ANTIGRAVITY MISSION SEED: SIX-FLAVOR REAL-WORLD INTEGRATION
+
+OBJECTIVE: Expand the Reggae Kitchen flavor matrix from five to six distinct items and surgically replace all placeholder styling with the actual uploaded label images on both the Storefront (index.html) and the Corporate Lore (lore.html) portals.
+
+🌶️ THE SIX-FLAVOR REAL-WORLD SPECIFICATIONS
+
+Configure the FLAVORS state array to host exactly six items with the following properties, mapping the image files verbatim:
+
+Original Jerk Seasoning Sauce
+
+ID: original
+
+File Asset: 1000021451.jpg
+
+Description: "The master foundation of Wayne Reid's legacy. Fresh green scallions, garlic, ginger, and lime blended with pimento wood smoke."
+
+Heat Level: 3 (Spicy)
+
+Price: 12.99
+
+Brand Color: bg-[#8A9A5B] (Olive/Sage Green)
+
+Curry Jerk Sauce with Turmeric
+
+ID: curry
+
+File Asset: 1000021454.jpg
+
+<truncated 5752 bytes>
