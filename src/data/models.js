@@ -61,6 +61,34 @@ export const FLAVORS = [
     pairs: ['Chicken', 'Pork', 'Vegetables'],
     desc: "All the rich, aromatic wood-smoke flavor of our original recipe, completely free of pepper heat.",
     image: 'Product Images/drive-download-20260611T162601Z-3-001/Screenshot_20260606_082813_Gmail.jpg'
+  },
+  {
+    id: 'bulk_case_original',
+    name: 'Bulk Case: Original Jerk',
+    type: '12 Jars / Commercial 2-Box Min.',
+    heat: 3,
+    price: 125.00,
+    color: 'bg-zinc-800',
+    pairs: ['GTA Delivery', 'Commercial', 'Grocer'],
+    desc: "GTA Grocer and restaurant minimum. Free Delivery in the region.",
+    image: 'Product Images/bulk_case_original.jpg',
+    isBulk: true,
+    deliveryZone: 'GTA',
+    minimumOrder: 2
+  },
+  {
+    id: 'bulk_bucket_original',
+    name: 'Bulk Bucket: Original Jerk',
+    type: '5-Gallon Pail / Commercial Only',
+    heat: 3,
+    price: 359.99,
+    color: 'bg-zinc-900',
+    pairs: ['GTA Delivery', 'Commercial', 'Kitchen'],
+    desc: "GTA Commercial kitchens and caterers. Deliveries scheduled weekly.",
+    image: 'Product Images/bulk_bucket_original.jpg',
+    isBulk: true,
+    deliveryZone: 'GTA',
+    minimumOrder: 1
   }
 ];
 

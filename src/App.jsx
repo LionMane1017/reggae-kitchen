@@ -26,8 +26,25 @@ const App = () => {
     }
   }, [aiResult, isAiThinking, isCartOpen, cart, isMobileMenuOpen]);
 
-  const addToCart = (item) => setCart(prev => [...prev, item]);
-  const subtotal = cart.reduce((s, i) => s + i.price, 0).toFixed(2);
+  const addToCart = (item) => {
+    if (item.id === 'bulk_case_original') {
+      const existingCount = cart.filter(i => i.id === 'bulk_case_original').length;
+      if (existingCount === 0) {
+        setCart(prev => [...prev, item, item]);
+        return;
+      }
+    }
+    setCart(prev => [...prev, item]);
+  };
+  const handleCheckout = () => {
+    const caseCount = cart.filter(i => i.id === 'bulk_case_original').length;
+    if (caseCount > 0 && caseCount < 2) {
+      alert("⚠️ Sovereign Protocol: Bulk Case orders require a minimum of 2 boxes for GTA commercial distribution.");
+      return;
+    }
+    alert("🛒 Secure Checkout initiated. Order compilation complete.");
+  };
+  const subtotal = (cart.reduce((s, i) => s + i.price, 0) - (Math.floor(cart.filter(i => i.id === 'bulk_case_original').length / 2) * 0.01)).toFixed(2);
 
   const handleAiGeneration = (e) => {
     e.preventDefault();
@@ -206,6 +223,9 @@ const App = () => {
                     ))}
                   </div>
                 </div>
+                {f.type && (
+                  <span className="text-rasta-gold text-[10px] font-black uppercase tracking-widest mb-2 block">{f.type}</span>
+                )}
                 <h3 className="text-3xl font-black text-white uppercase mb-4 tracking-tighter leading-none transition-colors group-hover:text-rasta-gold min-h-[72px] flex items-center">{f.name}</h3>
                 <p className="text-zinc-400 mb-8 font-medium leading-relaxed text-sm flex-grow">{f.desc}</p>
                 <div className="flex flex-wrap gap-2 mb-8">
@@ -293,7 +313,7 @@ const App = () => {
             </div>
             <div className="mt-10 border-t border-white/10 pt-10">
               <div className="flex justify-between items-center mb-8 text-3xl font-black text-white tracking-tighter"><span>Subtotal</span><span>${subtotal}</span></div>
-              <button className="w-full bg-rasta-green text-white font-black py-6 rounded-3xl uppercase tracking-[0.2em] shadow-[0_0_40px_rgba(0,155,58,0.4)] hover:bg-green-600 transition-all active:scale-95 text-lg">Secure Checkout</button>
+              <button onClick={handleCheckout} className="w-full bg-rasta-green text-white font-black py-6 rounded-3xl uppercase tracking-[0.2em] shadow-[0_0_40px_rgba(0,155,58,0.4)] hover:bg-green-600 transition-all active:scale-95 text-lg">Secure Checkout</button>
             </div>
           </div>
         </div>
